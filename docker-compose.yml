@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+  flask_app:
+    build:
+      context: .
+    ports:
+      - "80:80"
+    depends_on:
+      - postgres_db
+    env_file:
+      local.env
+  postgres_db:
+    image: postgres:11-alpine
+    restart: always
+    env_file:
+      local.env
+
