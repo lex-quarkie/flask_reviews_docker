@@ -1,5 +1,7 @@
 
 Flask>=1.1.2
+flask-admin
+
 flask_migrate
 flask_script
 flask_sqlalchemy

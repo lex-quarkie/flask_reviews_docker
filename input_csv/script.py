@@ -1,11 +1,35 @@
-import csv
+from csv import reader
+import logging
+import os
 
-REVIEWS_FILENAME = '../input_csv/reviews.csv'
-PRODUCTS_FILENAME = '../input_csv/products.csv'
-with open(REVIEWS_FILENAME, newline='') as csvfile:
-    reviews = csv.reader(csvfile, delimiter=' ', quotechar='|')
-    for obj in reviews:
-        from pudb import set_trace; set_trace()
 
-        asin = obj.pop(0)
-        print(row)
+basedir = os.path.abspath(os.path.dirname(__file__))
+
+PRODUCTS_FILENAME = os.path.join(basedir + '/products.csv')
+REVIEWS_FILENAME = os.path.join(basedir + '/reviews.csv')
+
+logging.basicConfig(level=logging.DEBUG)
+
+
+def read_products():
+    with open(PRODUCTS_FILENAME, 'r') as read_obj:
+        csv_reader = reader(read_obj)
+        logging.debug('Parsing started')
+        header = next(csv_reader)
+        # Check file as empty
+        if header:
+            parsed_rows = []
+            for row in csv_reader:
+                parsed_rows.append(row)
+
+def read_reviews():
+    with open(REVIEWS_FILENAME, 'r') as read_obj:
+        csv_reader = reader(read_obj)
+        logging.debug('Parsing started')
+        header = next(csv_reader)
+        # Check file as empty
+        if header:
+            parsed_rows = []
+            for row in csv_reader:
+                parsed_rows.append(row)
+

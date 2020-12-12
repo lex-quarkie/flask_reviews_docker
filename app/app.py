@@ -1,8 +1,10 @@
 import os
 
 from flask import Flask
-from flask_migrate import Migrate, MigrateCommand
+from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
+
+from app.manage import parse_csv
 
 class Config(object):
     postgres_user = os.getenv("POSTGRES_USER")
@@ -17,9 +19,11 @@ class Config(object):
 
 def init_app():
     app = Flask(__name__)
+    app.cli.add_command(parse_csv)
     app.config.from_object(Config)
     db.init_app(app)
     Migrate(app, db)
+
     return app
 
 db = SQLAlchemy(session_options={"autoflush": False})

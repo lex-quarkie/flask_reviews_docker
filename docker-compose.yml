@@ -10,6 +10,8 @@ services:
       - postgres_db
     env_file:
       local.env
+    volumes:
+      - ./input_csv/:/home/user/input_csv
   postgres_db:
     image: postgres:11-alpine
     restart: always

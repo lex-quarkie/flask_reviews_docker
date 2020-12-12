@@ -1,16 +1,13 @@
-from app import app, db
 
-import flask_script
-from flask_migrate import Migrate, MigrateCommand
+from input_csv import read_products
 
-def _make_context():
-    return dict(app=app, db=db)
-    # , models=models)
+import click
+from flask.cli import with_appcontext
 
 
-def main():
-    manager = flask_script.Manager(app)
+@click.command(name='parse_csv')
+@with_appcontext
+def parse_csv():
+    "Parsing csv files from input_csv/ folder"
 
-    manager.add_command("runserver", flask_script.Server())
-    manager.add_command("shell", flask_script.Shell(make_context=_make_context))
-    manager.add_command("db", MigrateCommand)
+    read_products()
