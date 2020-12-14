@@ -23,18 +23,16 @@ def parse_csv():
         db.session.commit()
     except Exception as e:
         db.session.rollback()
-        print(f'Exception: {e}')
+        print(f"Exception: {e}")
 
     for row in reviews:
-        review = Review(product_asin=row[0],
-                        title=row[1],
-                        review_text=row[2])
+        review = Review(product_asin=row[0], title=row[1], review_text=row[2])
         db.session.add(review)
     try:
         db.session.commit()
     except Exception as e:
         db.session.rollback()
-        print(f'Exception: {e}')
+        print(f"Exception: {e}")
 
 
 db = SQLAlchemy(session_options={"autoflush": False})
@@ -58,5 +56,6 @@ app = init_app()
 @app.shell_context_processor
 def make_shell_context():
     return {"db": db, "Product": Product, "Review": Review}
+
 
 from app.views import *
