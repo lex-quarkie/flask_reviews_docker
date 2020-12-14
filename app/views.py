@@ -1,10 +1,11 @@
-from app import app, db
+from app import app, db, cache
 from app.models import Product, Review
 from flask import request
 from flask.json import jsonify
 
 
 @app.route("/<product_id>", methods=["GET"])
+@cache.cached(timeout=50)
 def get(product_id):
     product = db.session.query(Product).get_or_404(product_id)
     reviews = []

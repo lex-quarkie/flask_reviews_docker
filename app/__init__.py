@@ -1,5 +1,6 @@
 import click
 from flask import Flask
+from flask_caching import Cache
 from flask.cli import with_appcontext
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
@@ -38,14 +39,20 @@ def parse_csv():
 db = SQLAlchemy(session_options={"autoflush": False})
 migrate = Migrate()
 
+cache = Cache(config={"CACHE_TYPE": "simple",
+                      "CACHE_DEFAULT_TIMEOUT": 300})
+
 
 def init_app(config_class=Config):
+
+
     app = Flask(__name__)
     app.config.from_object(config_class)
 
     db.init_app(app)
     migrate.init_app(app, db)
     app.cli.add_command(parse_csv)
+    cache.init_app(app)
 
     return app
 
