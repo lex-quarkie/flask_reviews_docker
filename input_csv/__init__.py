@@ -1,1 +1,1 @@
-from .script import read_products
+from .script import read_products, read_reviews

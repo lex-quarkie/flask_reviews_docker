@@ -1,7 +1,12 @@
-from app.app import app
+from app import app, db
+from app.models import Product, Review
+from flask.json import jsonify
 
-import socket
 
-@app.route("/")
-def hello():
-    return "Hello Container World! My hostname is %s.\n" % (socket.gethostname())
+@app.route("/<product_id>")
+def hello(product_id):
+    product = db.session.query(Product).get(product_id)
+
+    return jsonify({"id": product.id,
+                    "asin": product.asin,
+                    "reviews": product.reviews})
